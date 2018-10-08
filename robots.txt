@@ -1,0 +1,13 @@
+User-Agent: *
+Disallow: 
+Allow: /
+Allow: /blog/
+Allow: /IMG0.jpg
+Allow: /IMG1.jpg
+Allow: /IMG2.jpg
+Allow: /IMG3.jpg
+Allow: /IMG4.jpg
+Allow: /IMG5.jpg
+Allow: /IMG6.jpg
+Allow: /IMG7.jpg
+Allow: /IMG8.jpg

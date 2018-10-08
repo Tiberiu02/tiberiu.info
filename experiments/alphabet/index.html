@@ -1,0 +1,20 @@
+
+<head>
+<meta charset="UTF-8">
+<script>
+
+function update() {
+  var h = document.getElementById("main");
+
+  var v = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Â', 'â', 'Ă', 'ă', 'Î', 'î', 'ş', 'Ş', 'ţ', 'Ţ', 'ș', 'Ș', 'ț', 'Ț', 'ce', 'ci', 'ge', 'gi', 'che', 'chi', 'ghe', 'ghi'];
+  
+  h.innerHTML = v[Math.floor(Math.random() * v.length)];
+}
+
+</script></head>
+
+<body onclick="update()">
+
+<font size="+20"><h2 id="main" align="center">START</h2></font>
+
+</body>

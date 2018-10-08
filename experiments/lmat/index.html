@@ -1,0 +1,162 @@
+<html>
+<body style="font-size: 60px; text-align: center;">
+<span id='question'></span>=<input style="font-size: 60px;" size="4" id='answer' autofocus></input><br>
+<button id="check" style="font-size: 30px; margin-top:20px;">VERIFIC&#258;</button><br>
+<span id="stats" style="font-size: 30px;">F&#258;CUTE: 0</span>
+<p>
+<font id="wrong" color="red" style="font-size: 30px;">GRE&#350;IT</font>
+<font id="corect" color="green" style="font-size: 30px;">CORECT</font>
+</p>
+<br>
+<button id="next" style="font-size: 30px; margin-top:20px;">CONTINU&#258;</button><br>
+</body>
+<script>
+var za = 1, zb = 1, k = 0;
+
+function rand_int(a, b) {
+    return a + Math.floor(Math.random() * (b - a + 1));
+}
+
+var s = new Set();
+
+function next_q() {
+    var a, b;
+    if (completed < 10) {
+        a = rand_int(1, 10);
+        b = rand_int(1, 10);
+    }
+    else if (completed < 20) {
+        a = rand_int(10, 20);
+        b = rand_int(1, 10);
+    }
+    else if (completed < 30) {
+        a = rand_int(1, 50);
+        b = rand_int(1, 50);
+    }
+    else if (completed < 40) {
+        a = rand_int(50, 100);
+        b = rand_int(1, 75);
+    }
+    else if (completed < 50) {
+        a = rand_int(200, 500);
+        b = rand_int(1, 300);
+    } else if (completed >= 50)
+        return ["ESTI CEL MAI BUN! BRAVO!", 0];
+    
+    
+    if (a < b) {
+        var c = a;
+        a = b;
+        b = c;
+    }
+    return [a+"-"+b, a-b];
+    
+    if (completed < 10) {
+        var a = rand_int(20, 50);
+        var b = rand_int(20, 50);
+        return [a + "+" + b, a+b];
+    }
+    if (completed < 20) {
+        var a = rand_int(20, 50);
+        var b = rand_int(50, 150);
+        return [a + "+" + b, a+b];
+    }
+    if (completed < 30) {
+        var a = rand_int(50, 100);
+        var b = rand_int(50, 100);
+        return [a + "+" + b, a+b];
+    }
+    if (completed < 40) {
+        var a = rand_int(100, 500);
+        var b = rand_int(100, 500);
+        return [a + "+" + b, a+b];
+    }
+    if (completed < 50) {
+        var a = rand_int(0, 5);
+        var b = rand_int(2, 5);
+        return [a + "x" + b, a*b]
+    }
+    if (completed < 60) {
+        var a = rand_int(0, 7);
+        var b = rand_int(6, 10);
+        return [a + "x" + b, a*b]
+    }
+    if (completed < 70) {
+        var a = rand_int(0, 10);
+        var b = rand_int(10, 15);
+        return [a + "x" + b, a*b]
+    }
+    if (completed < 80) {
+        var a = rand_int(10, 15);
+        var b = rand_int(10, 15);
+        return [a + "x" + b, a*b]
+    }
+    if (completed < 90) {
+        var a = rand_int(10, 15);
+        var b = rand_int(15, 20);
+        return [a + "x" + b, a*b]
+    }
+    if (completed < 100) {
+        var a = rand_int(15, 25);
+        var b = rand_int(15, 25);
+        return [a + "x" + b, a*b]
+    }
+    return ["ESTI CEL MAI BUN! BRAVO!", 0];
+}
+
+var q = document.getElementById('question');
+var a = document.getElementById('answer');
+var ok = document.getElementById('corect');
+var bad = document.getElementById('wrong');
+var n1, n2;
+var ans, q_text;
+var completed = 0;
+[q_text, ans] = next_q();
+q.innerHTML = q_text;
+a.value = "";
+ok.style.display = "none";
+bad.style.display = "none";
+document.getElementById('next').style.display = "none";
+
+var answered = false;
+document.getElementById('check').onclick = function() {
+  if (a.value[0] == '#') {
+      completed = parseInt(a.value.slice(1));
+      document.getElementById('stats').innerHTML = "F&#258;CUTE: " + completed;
+      [q_text, ans] = next_q();
+      while (s.has(q_text)) {
+          [q_text, ans] = next_q();
+      }
+      s.add(q_text);
+      q.innerHTML = q_text;
+      a.value = "";
+      answered = false;
+  } else if (!answered) {
+    if (parseInt(a.value) == ans) {
+      ok.style.display = "";
+      bad.style.display = "none";
+      answered = true;
+      document.getElementById('next').style.display = "";
+      completed ++;
+      document.getElementById('stats').innerHTML = "F&#258;CUTE: " + completed;
+    } else
+      bad.style.display = "";
+  }
+}
+document.getElementById('next').onclick = function() {
+  if (answered) {
+    document.getElementById('next').style.display = "none";
+    ok.style.display = "none";
+    bad.style.display = "none";
+    [q_text, ans] = next_q();
+    while (s.has(q_text)) {
+        [q_text, ans] = next_q();
+    }
+    s.add(q_text);
+    q.innerHTML = q_text;
+    a.value = "";
+    answered = false;
+  }
+}
+</script>
+</html>

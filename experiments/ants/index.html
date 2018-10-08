@@ -1,0 +1,79 @@
+<html>
+<canvas width="300px" height="300px" style="border: 1px solid gray;" id="a3"></canvas>
+<canvas width="300px" height="300px" style="border: 1px solid gray;" id="a4"></canvas>
+<canvas width="300px" height="300px" style="border: 1px solid gray;" id="a5"></canvas>
+<canvas width="300px" height="300px" style="border: 1px solid gray;" id="a6"></canvas>
+<canvas width="300px" height="300px" style="border: 1px solid gray;" id="a7"></canvas>
+<canvas width="300px" height="300px" style="border: 1px solid gray;" id="a10"></canvas>
+<script>
+var centerX = 150;
+var centerY = 150;
+var radius = 140;
+var speed = 3;
+var tick = 1000 / 10;
+
+function move_ant(ctx, num_ants, fX, fY, T) {
+	if ((fX[0] - fX[1])**2 + (fY[0] - fY[1])**2 > 10) {
+		ctx.clearRect(0, 0, 300, 300);
+		for (var i = 0; i < num_ants; i ++) {
+			var angle = 2 * Math.PI * i / num_ants, beta = 2 * Math.PI / num_ants;
+			ctx.beginPath();
+			ctx.moveTo(centerX + radius * Math.sin(angle), centerY + radius * Math.cos(angle));
+			ctx.lineTo(centerX + radius * Math.sin(angle + beta), centerY + radius * Math.cos(angle + beta));
+			ctx.stroke();
+		}
+		for (var i = 0; i < num_ants; i ++) {
+				var dx = fX[(i + 1) % num_ants] - fX[i];
+				var dy = fY[(i + 1) % num_ants] - fY[i];
+				var d = Math.sqrt(dx * dx + dy * dy);
+				dx = dx / d * speed;
+				dy = dy / d * speed;
+				fX[i] += dx;
+				fY[i] += dy;
+				T[i].push([fX[i], fY[i]]);
+				//console.log(dx + ' ' + dy);
+			}
+
+		//console.log(T);
+		for (var ix = 0; ix < num_ants; ix ++) {
+			var a = T[ix];
+			ctx.beginPath();
+			ctx.moveTo(a[0][0], a[0][1]);
+			for (var i = 1; i < a.length; i ++)
+				ctx.lineTo(a[i][0], a[i][1]);
+			ctx.stroke();
+		}
+
+		for (var i = 0; i <num_ants; i ++) {
+			ctx.beginPath();
+			ctx.arc(fX[i],fY[i],2,0,2*Math.PI);
+			ctx.stroke();
+		}
+		setTimeout(move_ant, tick, ctx, num_ants, fX, fY, T);
+	} else
+		setTimeout(sim_ants, tick, ctx, num_ants);
+}
+
+function sim_ants(ctx, num_ants) {
+	//console.log(num_ants);
+	var fX = [];
+	var fY = [];
+	var T = [];
+
+	for (var i = 0; i < num_ants; i ++) {
+		var angle = 2 * Math.PI * i / num_ants;
+		fX.push(centerX + radius * Math.sin(angle));
+		fY.push(centerY + radius * Math.cos(angle));
+		T.push([[fX[i], fY[i]]]);
+	}
+
+	setTimeout(move_ant, tick, ctx, num_ants, fX, fY, T);
+}
+sim_ants(document.getElementById("a3").getContext("2d"), 3);
+sim_ants(document.getElementById("a4").getContext("2d"), 4);
+sim_ants(document.getElementById("a5").getContext("2d"), 5);
+sim_ants(document.getElementById("a6").getContext("2d"), 6);
+sim_ants(document.getElementById("a7").getContext("2d"), 7);
+sim_ants(document.getElementById("a10").getContext("2d"), 10);
+</script>
+</html>

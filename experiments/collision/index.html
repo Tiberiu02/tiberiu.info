@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    #canvas {
+      border: 1px gray solid;
+    }
+  </style>
+  <body>
+    <canvas id="canvas" width="500px" height="500px"></canvas>
+  </body>
+  <script>
+    function solve_collision(p1, p2, m1, m2) {
+      let a = p1 + p2;
+      let b = p1 * p1 * m2 + p2 * p2 * m1;
+      
+      let A = m1 + m2;
+      let B = -2 * m1 * a;
+      let C = m1 * a * a - b;
+      
+      let D = B * B - 4 * A * C;
+      
+      let x0 = (-B - Math.sqrt(D)) / (2 * A);
+
+      return [x0, a - x0];
+    }
+ 
+    var audio = new Audio("sport_snooker_ball_cueball_hit_other.mp3");
+    var can = document.getElementById("canvas");
+    var ctx = can.getContext("2d");
+
+    var balls = [
+      {rx: 51, ry: 50, vx: 150000, vy: 0, rad: 20},
+      {rx: 152, ry: 50, vx: 100000, vy: 0, rad: 20},
+      {rx: 253, ry: 50, vx: 50000, vy: 0, rad: 20},
+      {rx: 354, ry: 50, vx: 150000, vy: 0, rad: 20},
+      {rx: 445, ry: 50, vx: 150000, vy: 0, rad: 50},
+
+      {rx: 56, ry: 150, vx: 150000, vy: 0, rad: 20},
+      {rx: 157, ry: 150, vx: 100000, vy: 0, rad: 20},
+      //{rx: 258, ry: 150, vx: 500, vy: 0, rad: 20},
+      {rx: 359, ry: 150, vx: 150000, vy: 0, rad: 20},
+      {rx: 450, ry: 150, vx: 150000, vy: 0, rad: 30},
+
+      {rx: 51, ry: 250, vx: 150000, vy: 0, rad: 20},
+      {rx: 152, ry: 250, vx: 100000, vy: 0, rad: 20},
+      {rx: 253, ry: 250, vx: 50000, vy: 0, rad: 20},
+      {rx: 354, ry: 250, vx: 150000, vy: 0, rad: 20},
+      {rx: 455, ry: 250, vx: 150000, vy: 0, rad: 40},
+
+      {rx: 56, ry: 350, vx: 150000, vy: 0, rad: 20},
+      {rx: 157, ry: 350, vx: 100000, vy: 0, rad: 20},
+      //{rx: 258, ry: 350, vx: 500, vy: 0, rad: 20},
+      {rx: 350, ry: 350, vx: 150000, vy: 0, rad: 20},
+      {rx: 435, ry: 350, vx: 150000, vy: 0, rad: 60},
+
+      {rx: 51, ry: 450, vx: 150000, vy: 0, rad: 20},
+      {rx: 152, ry: 450, vx: 100000, vy: 0, rad: 20},
+      {rx: 253, ry: 450, vx: 50000, vy: 0, rad: 20},
+      {rx: 354, ry: 450, vx: 150000, vy: 0, rad: 20},
+      {rx: 455, ry: 450, vx: 150000, vy: 0, rad: 10},//
+      {rx: 250, ry: 150, vx: 150000, vy: 0, rad: 60},
+      {rx: 250, ry: 350, vx: 50000, vy: 0, rad: 10},//
+      //{rx: 250, ry: 150, vx: 1500, vy: 0, rad: 20},
+      /*{rx: 250, ry: 50, vx: 0, vy: 0, rad: 10},
+      {rx: 250, ry: 80, vx: 0, vy: 0, rad: 20},
+      {rx: 250, ry: 140, vx: 0, vy: 0, rad: 40},//*/
+      //{rx: 25, ry: 475, vx: 300000, vy: 0, rad: 25},
+      //{rx: 250, ry: 475, vx: 0, vy: 0, rad: 25},
+    ];
+
+    function render() {
+      ctx.clearRect(0, 0, 500, 500);    
+      ctx.beginPath();
+      for ( var ball_ix in balls ) {
+        var ball = balls[ball_ix];
+        ctx.moveTo(ball.rx + ball.rad, ball.ry);
+        ctx.arc(ball.rx, ball.ry, ball.rad, 0, 2*Math.PI);
+        ctx.textAlign = "center";
+        ctx.fillText(ball_ix, ball.rx, ball.ry);
+      }
+      ctx.stroke();
+
+      requestAnimationFrame(render);
+    }
+
+    render();
+
+    var spt = 0.000001;
+    var gravity = 1e4, air = 0.25, loss = 0.9, k = 1e7;
+
+    function engine() {
+      for ( var ball_ix in balls ) {
+        var ball = balls[ball_ix];
+        ball.rx += ball.vx * spt / (ball.rad * ball.rad);
+        ball.ry += ball.vy * spt / (ball.rad * ball.rad);
+      }
+
+      for ( var ball_ix in balls ) {
+        var ball = balls[ball_ix];
+        // Gravity
+        ball.vy += ball.rad * ball.rad * gravity * spt;
+
+        // Walls
+        // Reflection
+        if ( ball.rx + ball.rad >= 500 && ball.vx > 0 || ball.rx - ball.rad <= 0 && ball.vx < 0 ) {
+          ball.vx *= -loss;
+        }
+        if ( ball.ry + ball.rad >= 500 && ball.vy > 0 )
+          ball.vy *= -loss;
+        // Elastic force
+        if ( ball.rx + ball.rad >= 500 )
+          ball.vx -= (ball.rx + ball.rad - 500) * k * spt;
+        if ( ball.rx - ball.rad <= 0 )
+          ball.vx -= (ball.rx - ball.rad) * k * spt;
+        if ( ball.ry + ball.rad >= 500 )
+          ball.vy -= (ball.ry + ball.rad - 500) * k * spt;
+
+        // Air friction
+        ball.vx *= Math.pow(1 - air, spt);
+        ball.vy *= Math.pow(1 - air, spt);
+      }
+
+      for ( var i = 0; i < balls.length; i ++ )
+        for ( var j = i + 1; j < balls.length; j ++ ) {
+          var dx = balls[j].rx - balls[i].rx;
+          var dy = balls[j].ry - balls[i].ry;
+          var d = Math.sqrt( dx * dx + dy * dy );
+
+          if ( d > balls[i].rad + balls[j].rad )
+            continue;
+
+          dx /= d;
+          dy /= d;
+          // Elastic force
+          var dl = balls[i].rad + balls[j].rad - d;
+          balls[i].vx -= dx * dl * k * spt;
+          balls[i].vy -= dy * dl * k * spt;
+          balls[j].vx += dx * dl * k * spt;
+          balls[j].vy += dy * dl * k * spt;
+          
+          var pi0 = (balls[i].vx * dx + balls[i].vy * dy);
+          var pj0 = (balls[j].vx * dx + balls[j].vy * dy);
+          var mi = balls[i].rad ** 2;
+          var mj = balls[j].rad ** 2;
+
+
+          if (pi0 / mi - pj0 / mj < 0)
+            continue;
+
+          var new_p = solve_collision(pi0, pj0, mi, mj);
+          var pi1 = new_p[0] * loss;
+          var pj1 = new_p[1] * loss;
+          
+
+          // Reflection
+          balls[i].vx += dx * (pi1 - pi0);
+          balls[i].vy += dy * (pi1 - pi0);
+          balls[j].vx += dx * (pj1 - pj0);
+          balls[j].vy += dy * (pj1 - pj0);
+        }
+    }
+
+    setInterval(function() { for(var i = 0; i < 1000; i ++) engine(); }, 1);
+  </script>
+</html>

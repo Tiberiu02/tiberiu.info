@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <style>
+			.myButton {
+				background-color:#44c767;
+				-moz-border-radius:28px;
+				-webkit-border-radius:28px;
+				border-radius:28px;
+				border:1px solid #18ab29;
+				display:inline-block;
+				cursor:pointer;
+				color:#ffffff;
+				font-family:Arial;
+				font-size:17px;
+				padding:8px 31px;
+				margin-bottom: 10px;
+				text-decoration:none;
+				text-shadow:-1px -2px 0px #2f6627;
+				-moz-user-select: none;
+				-webkit-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+				-o-user-select: none;
+			}
+			.myButton:hover {
+				background-color:#5cbf2a;
+			}
+			.myButton:active {
+				position:relative;
+				top:1px;
+			}
+
+      canvas{
+        border: 0px solid gray;
+      }
+    </style>
+  </head>
+  <body onload="drawMaze()">
+		<title>Mazify!</title>
+		<div id="playButton">
+			<pre>This is a<span id="difficulty"></span> maze. It's generated out of thin air! Try solving it, if you can!</pre>
+			<a class="myButton" onclick="play()">Play</a><br>
+		</div>
+		<div id="controls" style="display: none;">
+			<pre>Use the arrows on your keyboard or the following buttons to move: </pre>
+			<a class="myButton" onclick="move([-1, 0])">Left</a>
+			<a class="myButton" onclick="move([1, 0])">Right</a>
+			<a class="myButton" onclick="move([0, -1])">Up</a>
+			<a class="myButton" onclick="move([0, 1])">Down</a>
+		</div>
+		<canvas id="maze"></canvas>
+		<pre>Difficulty:</pre>
+		<a class="myButton" onclick="mazeDiff = 0; drawMaze()">Easy</a>
+		<a class="myButton" onclick="mazeDiff = 1; drawMaze()">Medium</a>
+		<a class="myButton" onclick="mazeDiff = 2; drawMaze()">Hard</a><br>
+		<pre>Used algorithm:</pre>
+		<a class="myButton" onclick="mazeType = 0; drawMaze()">DFS</a>
+		<a class="myButton" onclick="mazeType = 1; drawMaze()">BFS</a>
+  </body>
+  <script src="jquery.js"></script>
+  <script src="maze.js"></script>
+  <script src="Queue.js"></script>
+  <script src="client.js"></script>
+</html>
