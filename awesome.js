@@ -36,7 +36,7 @@ function add_li(txt, lnk) {
 	htabs.appendChild(li);
 }
 
-if (window.location.pathname == "/utilizator/tiberiu02")
+if (window.location.pathname.toLocaleLowerCase() == "/utilizator/tiberiu02")
 	add_li("tiberiu.info", "https://tiberiu.info");
 //add_li("Vreau si eu!", "https://tiberiu.info/join.txt");
 
