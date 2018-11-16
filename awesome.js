@@ -38,5 +38,5 @@ function add_li(txt, lnk) {
 
 if (window.location.pathname == "/utilizator/tiberiu02")
 	add_li("tiberiu.info", "https://tiberiu.info");
-add_li("Vreau si eu!", "https://tiberiu.info/join.txt");
+//add_li("Vreau si eu!", "https://tiberiu.info/join.txt");
 
