@@ -17,7 +17,7 @@ window.setInterval(function(){
 	var hueAngle = Math.floor((d.getTime()) % interval / interval * 360);
 	document.getElementById('header').setAttribute('style', 'filter: hue-rotate(' + hueAngle + 'deg);');
 	document.getElementById('topnav').setAttribute('style', 'filter: hue-rotate(' + hueAngle + 'deg);');
-}, 1);
+}, 20);
 
 function add_li(txt, lnk) {
 	var htabs = document.getElementsByClassName('htabs')[0];
