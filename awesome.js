@@ -17,7 +17,7 @@ window.setInterval(function(){
 	var hueAngle = Math.floor((d.getTime()) % interval / interval * 360);
 	document.getElementById('header').setAttribute('style', 'filter: hue-rotate(' + hueAngle + 'deg);');
 	document.getElementById('topnav').setAttribute('style', 'filter: hue-rotate(' + hueAngle + 'deg);');
-}, 20);
+}, 1);
 
 function add_li(txt, lnk) {
 	var htabs = document.getElementsByClassName('htabs')[0];
@@ -36,7 +36,35 @@ function add_li(txt, lnk) {
 	htabs.appendChild(li);
 }
 
-if (window.location.pathname.toLocaleLowerCase() == "/utilizator/tiberiu02")
+if (window.location.pathname == "/utilizator/tiberiu02")
 	add_li("tiberiu.info", "https://tiberiu.info");
-//add_li("Vreau si eu!", "https://tiberiu.info/join.txt");
+add_li("Vreau si eu!", "https://tiberiu.info/join.txt");
 
+var [a, b, c] = document.getElementsByClassName('htabs')[0].children;
+a.children[0].setAttribute("target", "awframe");
+b.children[0].setAttribute("target", "awframe");
+c.children[0].setAttribute("target", "awframe");
+var active = a;
+
+var iframe = document.createElement("iframe");
+iframe.setAttribute("name", "awframe");
+iframe.onload = function() {
+	document.body.getElementsByClassName("wiki_text_block")[2].innerHTML = iframe.contentDocument.body.getElementsByClassName("wiki_text_block")[2].innerHTML;
+	active.setAttribute("class", "");
+	var href = iframe.contentWindow.location.href;
+	if (href == a.children[0].href) active = a;
+	if (href == b.children[0].href) active = b;
+	if (href == c.children[0].href) active = c;
+	active.setAttribute("class", "active");
+}
+
+iframe.style.display = "none";
+document.body.appendChild(iframe);
+iframe.src = "https://www.infoarena.ro/utilizator/Tiberiu02";
+
+var tds = document.getElementsByTagName("td");
+for (var x in tds)
+	if (tds[x].innerHTML == "Helper") {
+		tds[x].innerHTML = "Helper (Admin wannabe)";
+		break;
+	}
