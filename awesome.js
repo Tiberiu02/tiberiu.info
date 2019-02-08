@@ -67,6 +67,12 @@ function change_htabs_taget() {
 		if (href == df_b.children[0].href) df_active = df_b;
 		if (href == df_c.children[0].href) df_active = df_c;
 		df_active.setAttribute("class", "active");
+
+		if (df_active != df_a)
+			return;
+		if (viewer_status != "")
+			insert_info();
+		apply_style();
 	}
 
 	dummy_frame.style.display = "none";
@@ -122,7 +128,6 @@ async function get_user_status(username) {
 		return "";
 	status = "loading";
 
-	
 	spy_frame = document.createElement("iframe");
 	spy_frame.setAttribute("name", "spy_frame");
 	spy_frame.onload = function() {
@@ -144,7 +149,6 @@ async function get_user_status(username) {
 		} catch(e) {
 			status = "";
 		}
-		console.log(status);
 	}
 
 	spy_frame.style.display = "none";
@@ -157,15 +161,9 @@ async function get_user_status(username) {
 }
 
 function main() {
-	var viewer_status = status;
+	viewer_status = status;
 	if (viewer_status == "Administrator")
 		return; // Stealth mode ON
-	if (viewer_status != "")
-		insert_info();
-	apply_style();
-
-	if (inIframe())
-		return;
 
 	colorize_navbar();
 
@@ -179,6 +177,9 @@ function main() {
 }
 
 function mainLoader() {
+	if (inIframe())
+		return;
+
 	get_user_status(get_viewer_username()).then(main);
 }
 
