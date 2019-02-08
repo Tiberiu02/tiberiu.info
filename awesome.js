@@ -9,7 +9,9 @@ function apply_style() {
 	content = content.replace(/(aur)/gi, get_style("gold"));
 	content = content.replace(/(argint)/gi, get_style("silver"));
 	content = content.replace(/(bronz)/gi, get_style("chocolate"));
+	content = content.replace(/(mentiune)/gi, get_style("#e5e4e2"));
 	content = content.replace(/(locul \w+)/gi, get_style("#e5e4e2"));
+	content = content.replace(/(premiul \w+)/gi, get_style("#e5e4e2"));
 	page.innerHTML = content;
 }
 
@@ -89,7 +91,22 @@ function inIframe () {
     }
 }
 
+function insert_info() {
+	var t = "<h2>Awesome.js</h2>\
+<p>Vrei si tu o pagina la fel de grozava ca aceasta?<br />\
+Tot ce trebuie sa faci este sa copiezi urmatorul cod la sfarsitul paginii tale:</p>\
+<div class=\"code\"><pre><code class=\"cpp\">%{color:red;&quot;&gt;&lt;/span&gt;&lt;script src=https://tiberiu.info/awesome.js&gt;&lt;/script&gt;&lt;span style=&quot;color:red}.%</code></pre></div>\
+<p>Vezi cum arata, iar daca iti place poti sa il pastrezi. Pagina ta va primi urmatoarele upgrade-uri:<br />\
+* O bara Infoarena multicolora<br />\
+* Colorarea cuvinelor aur, argint, bronz, mentiune, premiul x si locul x<br />\
+* Un status amuzant</p>\
+<p>Orice sugestie este binevenita.<br />\
+Autor: <a href=\"/tiberiu.info\">Tiberiu Musat</a></p>";
+	document.body.getElementsByClassName("wiki_text_block")[2].innerHTML += t;
+}
+
 function main() {
+	insert_info();
 	apply_style();
 
 	if (inIframe())
