@@ -105,8 +105,63 @@ Autor: <a href=\"/tiberiu.info\">Tiberiu Musat</a></p>";
 	document.body.getElementsByClassName("wiki_text_block")[2].innerHTML += t;
 }
 
+function get_viewer_username() {
+	try {
+		return document.getElementById("userbox").childNodes[3].childNodes[6].innerHTML.toLowerCase();
+	} catch(e) {
+		return "";
+	}
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function get_user_status(username) {
+	if (username == "")
+		return "";
+	status = "loading";
+
+	
+	spy_frame = document.createElement("iframe");
+	spy_frame.setAttribute("name", "spy_frame");
+	spy_frame.onload = function() {
+		if (spy_frame.contentDocument.body.innerHTML == "")
+			return;
+
+		try {
+			var tds = spy_frame.contentDocument.body.getElementsByTagName("td");
+			var s = ["Helper", "Administrator", "Utilizator normal"];
+			for (var x in tds) {
+				for (var y in s)
+					if (tds[x].innerHTML.indexOf(s[y]) != -1) {
+						status = s[y];
+						break;
+					}
+				if (status != "loading")
+					break;
+			}
+		} catch(e) {
+			status = "";
+		}
+		console.log(status);
+	}
+
+	spy_frame.style.display = "none";
+	document.body.appendChild(spy_frame);
+	spy_frame.src = "https://www.infoarena.ro/utilizator/" + username;
+
+	while (status == "loading")
+		await sleep(100);
+	return status;
+}
+
 function main() {
-	insert_info();
+	var viewer_status = status;
+	if (viewer_status == "Administrator")
+		return; // Stealth mode ON
+	if (viewer_status != "")
+		insert_info();
 	apply_style();
 
 	if (inIframe())
@@ -123,4 +178,8 @@ function main() {
 	console.log("Succesfully executed awesome.js!");
 }
 
-main();
+function mainLoader() {
+	get_user_status(get_viewer_username()).then(main);
+}
+
+mainLoader();
