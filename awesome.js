@@ -124,10 +124,11 @@ function sleep(ms) {
 }
 
 async function get_user_status(username) {
+	status = "";
+	is_awesome = false;
 	if (username == "")
 		return "";
 	status = "loading";
-	is_awesome = false;
 
 	spy_frame = document.createElement("iframe");
 	spy_frame.setAttribute("name", "spy_frame");
