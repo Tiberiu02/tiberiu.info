@@ -70,7 +70,7 @@ function change_htabs_taget() {
 
 		if (df_active != df_a)
 			return;
-		if (viewer_status != "")
+		if (viewer.status != "" && !viewer.is_awesome)
 			insert_info();
 		apply_style();
 	}
@@ -90,11 +90,11 @@ function change_status(new_status) {
 }
 
 function inIframe () {
-    try {
-        return window.self !== window.top;
-    } catch (e) {
-        return true;
-    }
+	try {
+		return window.self !== window.top;
+	} catch (e) {
+		return true;
+	}
 }
 
 function insert_info() {
@@ -120,13 +120,14 @@ function get_viewer_username() {
 }
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function get_user_status(username) {
 	if (username == "")
 		return "";
 	status = "loading";
+	is_awesome = false;
 
 	spy_frame = document.createElement("iframe");
 	spy_frame.setAttribute("name", "spy_frame");
@@ -149,6 +150,22 @@ async function get_user_status(username) {
 		} catch(e) {
 			status = "";
 		}
+
+		try {
+			var scripts = spy_frame.contentDocument.body.getElementsByTagName("script");
+			var awesome_src = "https://tiberiu.info/awesome.js";
+			for (var x in scripts) {
+				for (var y in s)
+					if (scripts[x].src == awesome_src) {
+						is_awesome = true;
+						break;
+					}
+				if (is_awesome)
+					break;
+			}
+		} catch(e) {
+			is_awesome = false;
+		}
 	}
 
 	spy_frame.style.display = "none";
@@ -161,8 +178,8 @@ async function get_user_status(username) {
 }
 
 function main() {
-	viewer_status = status;
-	if (viewer_status == "Administrator")
+	viewer = {status: status, is_awesome: is_awesome};
+	if (viewer.status == "Administrator")
 		return; // Stealth mode ON
 
 	colorize_navbar();
