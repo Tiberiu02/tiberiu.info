@@ -6,12 +6,12 @@ function apply_style() {
 	var page = document.getElementsByClassName('wiki_text_block')[2];
 	var content = page.innerHTML;
 
-	content = content.replace(/(aur)/gi, get_style("gold"));
-	content = content.replace(/(argint)/gi, get_style("silver"));
-	content = content.replace(/(bronz)/gi, get_style("chocolate"));
-	content = content.replace(/(mentiune)/gi, get_style("#e5e4e2"));
-	content = content.replace(/(locul \w+)/gi, get_style("#e5e4e2"));
-	content = content.replace(/(premiul \w+)/gi, get_style("#e5e4e2"));
+	content = content.replace(/(\baur\b)/gi, get_style("gold"));
+	content = content.replace(/(\bargint\b)/gi, get_style("silver"));
+	content = content.replace(/(\bbronz\b)/gi, get_style("chocolate"));
+	content = content.replace(/(\bmentiune\b)/gi, get_style("#e5e4e2"));
+	content = content.replace(/(\blocul \w+\b)/gi, get_style("#e5e4e2"));
+	content = content.replace(/(\bpremiul \w+\b)/gi, get_style("#e5e4e2"));
 	page.innerHTML = content;
 }
 
