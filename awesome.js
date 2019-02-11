@@ -133,8 +133,7 @@ async function get_user_status(username) {
 	spy_frame = document.createElement("iframe");
 	spy_frame.setAttribute("name", "spy_frame");
 	spy_frame.onload = function() {
-		if (spy_frame.contentDocument.body.
-		    == "")
+		if (spy_frame.contentDocument.body.innerHTML == "")
 			return;
 
 		try {
