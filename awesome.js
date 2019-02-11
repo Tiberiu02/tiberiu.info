@@ -137,6 +137,7 @@ async function get_user_status(username) {
 			if (spy_frame.contentDocument.body.innerHTML == "")
 				return;
 		} catch(e) {
+			status = "";
 			return;
 		}
 		
