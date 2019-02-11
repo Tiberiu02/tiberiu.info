@@ -105,7 +105,7 @@ Tot ce trebuie sa faci este sa copiezi urmatorul cod la sfarsitul paginii tale:<
 <p>Vezi cum arata, iar daca iti place poti sa il pastrezi. Pagina ta va primi urmatoarele upgrade-uri:<br />\
 * O bara Infoarena multicolora<br />\
 * Colorarea cuvinelor aur, argint, bronz, mentiune, premiul x si locul x<br />\
-* Un status amuzant</p>\
+* Un status + cursor amuzant</p>\
 <p>Orice sugestie este binevenita.<br />\
 Autor: <a href=\"/tiberiu.info\">Tiberiu Musat</a></p>";
 	document.body.getElementsByClassName("wiki_text_block")[2].innerHTML += t;
@@ -183,12 +183,17 @@ async function get_user_status(username) {
 	return status;
 }
 
+function changeCursor(url) {
+	document.body.setAttribute("style", "cursor: url(" + url + "), auto;");
+}
+
 function main() {
 	viewer = {status: status, is_awesome: is_awesome};
 	if (viewer.status == "Administrator")
 		return; // Stealth mode ON
 
 	colorize_navbar();
+	changeCursor("http://www.rw-designer.com/cursor-download.php?id=65034");
 
 	if (get_profile_username() == "tiberiu02")
 		add_li("tiberiu.info", "https://tiberiu.info");
