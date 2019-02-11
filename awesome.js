@@ -113,7 +113,7 @@ Autor: <a href=\"/tiberiu.info\">Tiberiu Musat</a></p>";
 
 function get_viewer_username() {
 	try {
-		return document.getElementById("userbox").childNodes[3].childNodes[6].innerHTML.toLowerCase();
+		return document.getElementById("userbox").childNodes[3].childNodes[6].innerText.toLowerCase();
 	} catch(e) {
 		return "";
 	}
@@ -133,7 +133,8 @@ async function get_user_status(username) {
 	spy_frame = document.createElement("iframe");
 	spy_frame.setAttribute("name", "spy_frame");
 	spy_frame.onload = function() {
-		if (spy_frame.contentDocument.body.innerHTML == "")
+		if (spy_frame.contentDocument.body.
+		    == "")
 			return;
 
 		try {
@@ -141,7 +142,7 @@ async function get_user_status(username) {
 			var s = ["Helper", "Administrator", "Utilizator normal"];
 			for (var x in tds) {
 				for (var y in s)
-					if (tds[x].innerHTML.indexOf(s[y]) != -1) {
+					if (tds[x].innerText.indexOf(s[y]) != -1) {
 						status = s[y];
 						break;
 					}
