@@ -133,9 +133,13 @@ async function get_user_status(username) {
 	spy_frame = document.createElement("iframe");
 	spy_frame.setAttribute("name", "spy_frame");
 	spy_frame.onload = function() {
-		if (spy_frame.contentDocument.body.innerHTML == "")
+		try {
+			if (spy_frame.contentDocument.body.innerHTML == "")
+				return;
+		} catch(e) {
 			return;
-
+		}
+		
 		try {
 			var tds = spy_frame.contentDocument.body.getElementsByTagName("td");
 			var s = ["Helper", "Administrator", "Utilizator normal"];
