@@ -52,6 +52,9 @@ function change_htabs_taget() {
 	df_a.children[0].setAttribute("target", "dummy_frame");
 	df_b.children[0].setAttribute("target", "dummy_frame");
 	df_c.children[0].setAttribute("target", "dummy_frame");
+	df_a.children[0].href = df_a.children[0].href.replace("http://", "https://");
+	df_b.children[0].href = df_b.children[0].href.replace("http://", "https://");
+	df_c.children[0].href = df_c.children[0].href.replace("http://", "https://");
 	df_active = df_a;
 
 	dummy_frame = document.createElement("iframe");
