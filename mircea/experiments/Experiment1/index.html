@@ -16,7 +16,7 @@
     function draw(){
       ctx.clearRect(0, 0, c.width, c.height);
       ctx.fillStyle = "#ffffff";
-      ctx.fillRect(x - 10, y - 10, x + 10, y + 10);
+      ctx.fillRect(x - 10, y - 10, 20, 20);
       ctx.stroke();
     }
     document.onkeydown = function(evt){
@@ -29,7 +29,7 @@
         x = x + 3;
       }else if(key == 40){
 	    y = y + 3;
-	  }
+      }
     };
 	setInterval(draw, 1);
   </script>
