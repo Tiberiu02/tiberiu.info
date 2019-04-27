@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html>
+  <head>
+	  <title>JavaScript Key Movement</title>
+		<link rel = "stylesheet" type = "text/css" href = "../../styles.css">
+	</head>
   <body>
     <canvas id = "c" height = "500px" width = "500px"></canvas>
-    <p>Press the arrow key's to move the square</p>
+		<p>Press the arrow key's to move the square</p>
+		<h2><a href = "../index.html" >< Back</a></h2> 
   </body>
   <script>
     var c = document.getElementById("c");
@@ -16,6 +21,7 @@
       ctx.lineTo(x + 10, y + 10);
       ctx.lineTo(x - 10, y + 10);
       ctx.lineTo(x - 10, y - 10);
+			ctx.strokeStyle = "#ffffff";
       ctx.stroke();
     }
     document.onkeydown = function(evt){
@@ -33,8 +39,11 @@
 	setInterval(draw, 1);
   </script>
   <style>
+	  body {
+		  margin: 8px;
+		}
     canvas {
-      border: 2px gray solid;
+      border: 2px white solid;
     }
   </style>
 </html>
