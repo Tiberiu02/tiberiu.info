@@ -21,7 +21,7 @@ xhttp.onreadystatechange = function(){
     document.getElementsByClassName("language-js")[0].innerHTML = this.responseText;
   }
 };
-xhttp.open("POST", file_path, true);
+xhttp.open("GET", file_path, true);
 xhttp.send();
 
 </script>
