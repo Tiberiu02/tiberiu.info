@@ -22,10 +22,24 @@
 	  <div class = "text" align = "center">
 	  <div>
 		<h1 align = "center"> About Me </h1>
-		<div class = "line"></div>
+		<div class = "big-line"></div>
 	    <div>I am a <b>5</b>th grader. I study programming.<br>
 	    I program in <b>C</b> and <b>Python</b> and many other languadges and I code whenever I have free time.</div>
 	  </div>
+		<div>
+		<h1 align = "center"> Awards </h1>
+		<div class = "big-line"></div>
+		<div class = "tabs">
+		  <button class = "tab" onclick = "setTab(event, '2019')" id = "default">2019</button>
+		</div>
+		<div class = "tab-content" id = "2019">
+		  <div class = "prize">National Olimpiad of Informatics Bronze Medal</div>
+		</div>
+		</div>
+		<div>
+		<h1 align = "center"> My Skills </h1>
+		<div class = "big-line"></div>
+		</div>
 	  <div>
 	    <h1 align = "center"> C </h1>
 		<div class = "line"></div>
@@ -77,15 +91,38 @@
 	  <br>
 	  </div>
 	</div>
+	<script>
+	
+	function setTab(evt, id){
+	  var i, tabcontent, tabs;
+		
+		/* reset everything */
+		tabs = document.getElementsByClassName("tab");
+		for( i = 0 ; i < tabs.length ; i++ ){
+		  tabs[i].className = tabs[i].className.replace(" active", "");
+		}
+		
+		tabcontent = document.getElementsByClassName("tab-content");
+		for( i = 0 ; i < tabcontent.length ; i++ ){
+		  tabcontent[i].style.display = "none";
+		}
+		
+		/* set active tabs */
+		document.getElementById(id).style.display = "block";/* tabcontent */
+		evt.currentTarget.className += " active";/* tab */
+	}
+	
+	document.getElementById("default").click();
+	
+	</script>
   </body>
   <style>
   .navbar {
 	  position: sticky;
-	  top: 0;
-	  z-index: 1;
+		top: 0; 
 	  float: up;
 	  overflow: hidden;
-      background-color: white;
+    background-color: white;
 	  z-index: 2;
 	}
 	.title{
@@ -192,6 +229,17 @@
 	}
 	.text .line {
 	  height: 5px;
+		width: 450px;
+		background-color: white;
+		margin-bottom: 10px;
+	}
+	@media screen and ( max-width: 490px ) {
+		.text .line {
+      width: calc( 100% - 40px );
+    }
+  }
+	.text .big-line {
+	  height: 5px;
 		width: 500px;
 		background-color: white;
 		margin-bottom: 10px;
@@ -200,11 +248,55 @@
     .text div div {
 		  max-width: calc( 100% - 100px );
 		}
-		.text .line {
+		.text .big-line {
       width: calc( 100% - 40px );
     }
   }
-
+	.text div .tabs {
+	  overflow-x: auto;
+    border: 1px solid #ccc;
+	}
+	.text div .tabs button {
+	  background-color: inherit;
+    float: left;
+    border: 1px solid white;
+		border-bottom: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+		color: white;
+		font-weight: bold;
+	}
+	.text div .tabs button:hover {
+	  background-color: rgba(0, 0, 0, 0.5);
+	}
+	.text div .tabs .active {
+	  background-color: rgba(0, 0, 0, 0.7);
+    border-top: 2px solid white;
+    border-left: 2px solid white;
+    border-right: 2px solid white;
+		border-bottom: none;
+	}
+	.text div .tab-content {
+	  height: 200px;
+	  padding-bottom: 10px;
+	  padding-top: 10px;
+    display: none;
+    border: 2px solid #ffffff;
+    /* border-top: none;*/
+		-webkit-animation: fadeEffect 1s;/* Safari */
+    aniation: fadeEffect 1s;
+		overflow-y: auto;
+	}
+	.prize {
+	  font-size:   20px;
+		font-weight: bold;
+	}
+	@keyframes fadeEffect {
+    from {opacity: 0;}
+    to   {opacity: 1;}
+  }
   </style>
 </html>
 
