@@ -7,6 +7,14 @@
     <link rel = "stylesheet" type = "text/css" href = "styles.css">
   </head>
   <body>
+	<div class = "start-animation">
+	  <div class = "container">
+      <h1 align = "center">Loading:</h1><br>
+      <div id = "container">
+      <div align = "center" id = "bar"></div>
+      </div>
+    </div>
+	</div>
 	<div class = "navbar">
 	  <div class = "dropdown">
 	    <button class="dropbtn">Navigate</button>
@@ -93,6 +101,7 @@
 	</div>
 	<script>
 	
+	/* Awards */
 	function setTab(evt, id){
 	  var i, tabcontent, tabs;
 		
@@ -114,9 +123,70 @@
 	
 	document.getElementById("default").click();
 	
+	/* start animation */
+	var time2fill = 4000;
+  var start = Date.now();
+  var bar = document.getElementById("bar");
+  var container_width = 400;
+
+  function update(){
+    if( Date.now() - start < time2fill ){
+      bar.style.width = Math.round((Date.now() - start) * container_width / time2fill) + "px";
+      bar.innerHTML = Math.round((Date.now() - start) * 100 / time2fill) + "%";
+
+      setTimeout(update, 10);
+    }else{
+      bar.style.width = container_width + "px";
+      bar.innerHTML = "100%";
+    }
+  }
+	
+	update();
+  document.body.style.overflow = "hidden";
+  setTimeout(function(){document.body.removeChild(document.body.childNodes[1]);document.body.style.overflow = "auto";}, 5000);
+	
 	</script>
   </body>
   <style>
+	/* animations */
+	@keyframes fadeEffect {
+    from {opacity: 0;}
+    to   {opacity: 1;}
+  }
+	@keyframes startAnimation {
+	  0%   {opacity: 1;}
+	  80%  {opacity: 1;}
+	  100% {opacity: 0;}
+	}
+	
+	/* element styles */
+	.start-animation {
+	  animation: startAnimation 5s;
+		width: 100%;
+		height: 100vh;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-color: rgba(0, 0, 0, 0.95);
+		z-index: 3;
+	}
+  .container {
+    position: absolute;
+    top: calc( 50vh - 65px );
+    left: calc( 50% - 190px );
+  }
+	#container {
+    background-color: #ddd;
+    height: 25px;
+    width: 400px;
+  }
+  #bar {
+    background-color: #21aeea;
+    color: white;
+    height: 25px;
+		float: left;
+    overflow: hidden;
+  }
   .navbar {
 	  position: sticky;
 		top: 0; 
@@ -233,25 +303,13 @@
 		background-color: white;
 		margin-bottom: 10px;
 	}
-	@media screen and ( max-width: 490px ) {
-		.text .line {
-      width: calc( 100% - 40px );
-    }
-  }
 	.text .big-line {
 	  height: 5px;
 		width: 500px;
 		background-color: white;
 		margin-bottom: 10px;
 	}
-	@media screen and ( max-width: 600px ) {
-    .text div div {
-		  max-width: calc( 100% - 100px );
-		}
-		.text .big-line {
-      width: calc( 100% - 40px );
-    }
-  }
+	
 	.text div .tabs {
 	  overflow-x: auto;
     border: 1px solid #ccc;
@@ -293,9 +351,20 @@
 	  font-size:   20px;
 		font-weight: bold;
 	}
-	@keyframes fadeEffect {
-    from {opacity: 0;}
-    to   {opacity: 1;}
+  
+	/* media queries */
+	@media screen and ( max-width: 600px ) {
+    .text div div {
+		  max-width: calc( 100% - 100px );
+		}
+		.text .big-line {
+      width: calc( 100% - 40px );
+    }
+  }
+	@media screen and ( max-width: 490px ) {
+		.text .line {
+      width: calc( 100% - 40px );
+    }
   }
   </style>
 </html>
