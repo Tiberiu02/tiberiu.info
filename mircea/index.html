@@ -10,11 +10,10 @@
 	<div class = "start-animation">
 	  <div class = "container">
       <h1 align = "center">Loading:</h1><br>
-      <div id = "container">
-      <div align = "center" id = "bar"></div>
-      </div>
+      <div id = "container"><div align = "center" id = "bar"></div></div>
     </div>
 	</div>
+  <div style = "width: 500px" id = "test"></div>
 	<div class = "navbar">
 	  <div class = "dropdown">
 	    <button class="dropbtn">Navigate</button>
@@ -128,7 +127,12 @@
   var start = Date.now();
   var bar = document.getElementById("bar");
   var container_width = 400;
+  
+  if( window.innerWidth <= 500 )
+    container_width = window.innerWidth - 100;
 
+  document.getElementById("container").style.width = container_width + "px";
+ 
   function update(){
     if( Date.now() - start < time2fill ){
       bar.style.width = Math.round((Date.now() - start) * container_width / time2fill) + "px";
@@ -364,6 +368,11 @@
 	@media screen and ( max-width: 490px ) {
 		.text .line {
       width: calc( 100% - 40px );
+    }
+  }
+  @media screen and ( max-width: 500px ) {
+    .container {
+      left: 50px;
     }
   }
   </style>
