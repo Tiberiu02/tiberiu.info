@@ -134,6 +134,7 @@
   document.getElementById("container").style.width = container_width + "px";
  
   function update(){
+    window.scrollTo(0, 0);
     if( Date.now() - start < time2fill ){
       bar.style.width = Math.round((Date.now() - start) * container_width / time2fill) + "px";
       bar.innerHTML = Math.round((Date.now() - start) * 100 / time2fill) + "%";
